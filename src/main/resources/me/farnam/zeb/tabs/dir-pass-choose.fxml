@@ -26,16 +26,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Choose Directory:" textFill="WHITE" />
-            <TextField fx:id="dirPathTF" GridPane.columnIndex="1">
+            <Label text="📂 Choose Directory:" textFill="WHITE" />
+            <TextField fx:id="dirPathTF" promptText="Type path or hit the choose button." GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </TextField>
             <Button fx:id="chooseBtn" mnemonicParsing="false" onAction="#onDirChooseBtn" text="Choose" GridPane.columnIndex="2" />
             <CheckBox fx:id="passwordCheck" mnemonicParsing="false" onAction="#onPassCheck" text="Use password" textFill="WHITE" GridPane.rowIndex="1" />
-            <Label fx:id="setPassLabel" disable="true" text="Set Password:" textFill="WHITE" GridPane.rowIndex="2" />
-            <Label fx:id="repeatPassLabel" disable="true" text="Repeat Password:" textFill="WHITE" GridPane.rowIndex="3" />
+            <Label fx:id="setPassLabel" disable="true" text="🔑 Set Password:" textFill="WHITE" GridPane.rowIndex="2" />
+            <Label fx:id="repeatPassLabel" disable="true" text="🔑 Repeat Password:" textFill="WHITE" GridPane.rowIndex="3" />
             <PasswordField fx:id="setPassPF" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="20.0" right="20.0" />
