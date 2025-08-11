@@ -1,6 +1,7 @@
 module me.farnam {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
     opens me.farnam.zeb to javafx.fxml;
     exports me.farnam.zeb;
