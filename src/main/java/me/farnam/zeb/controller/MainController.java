@@ -25,6 +25,7 @@ public class MainController {
     public void initialize() throws IOException {
         logConsoleTextArea.appendText("Welcome to ZEB \uD83D\uDD10!\nLog:\n");
         dirPassChooseTab.setContent(loadFXML("tabs/dir-pass-choose.fxml"));
+        gitTab.setContent(loadFXML("tabs/git.fxml"));
     }
 
     private Parent loadFXML(String fxml) throws IOException {
