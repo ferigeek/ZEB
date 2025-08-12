@@ -3,6 +3,9 @@ package me.farnam.zeb.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
@@ -22,6 +25,8 @@ public class ChooseDirPassController {
     private Label repeatPassLabel;
     @FXML
     private PasswordField repeatPassPF;
+    @FXML
+    private ImageView passwordCheckIcon;
 
     /**
      * If "Use password" checkbox is selected, related password fields are enabled.
@@ -60,6 +65,19 @@ public class ChooseDirPassController {
         }
 
         dirPathTF.setText(chosenPath.getAbsolutePath());
+    }
+
+    @FXML
+    private void onRepeatPasswordChange(KeyEvent event) {
+        String initPass = setPassPF.getText();
+        String repeatPass = repeatPassPF.getText();
+        if (initPass.equals(repeatPass)) {
+            Image checkIcon = new Image(getClass().getResourceAsStream("/icons/check.png"));
+            passwordCheckIcon.setImage(checkIcon);
+        } else {
+            Image crossIcon = new Image(getClass().getResourceAsStream("/icons/close.png"));
+            passwordCheckIcon.setImage(crossIcon);
+        }
     }
 
     private void disablePasswordFields(boolean tf) {

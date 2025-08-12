@@ -26,7 +26,7 @@
           <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="108.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Commit message:" textFill="WHITE" />
+            <Label text="Commit Message:" textFill="WHITE" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
                   <RadioButton fx:id="timestampRadioButton" mnemonicParsing="false" onAction="#onTimestampSelect" selected="true" text="Timestamp" textFill="WHITE">
