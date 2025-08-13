@@ -1,5 +1,12 @@
 package me.farnam.zeb;
 
+import org.eclipse.jgit.api.CommitCommand;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -53,7 +60,25 @@ public class Backup {
 
     }
 
-    private void commitChanges() {
+    /**
+     * If there is no git repository(hasGit is set to <code>false</code>), it will do nothing.
+     * Use <code>setHasGit</code> to <code>true</code> if the directory has git repository.
+     * Finds the git repository in the directory and commits with the given message.
+     * @param commitMessage
+     * @throws IOException
+     * @throws GitAPIException
+     */
+    private void commitChanges(String commitMessage) throws IOException, GitAPIException {
+        if (!hasGit) return;
 
+        FileRepositoryBuilder builder = new FileRepositoryBuilder();
+        Repository gitRepo = builder.setGitDir(backupDirectory)
+                .readEnvironment()
+                .findGitDir()
+                .build();
+
+        Git git = new Git(gitRepo);
+        CommitCommand commit = git.commit();
+        commit.setMessage(commitMessage).call();
     }
 }
