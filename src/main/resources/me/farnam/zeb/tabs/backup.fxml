@@ -73,7 +73,7 @@
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" text="Choose" GridPane.columnIndex="2" />
+                  <Button fx:id="backupOutputChooseBtn" mnemonicParsing="false" text="Choose" GridPane.columnIndex="2" />
                   <Label text="Backup File Name:" textFill="WHITE" GridPane.rowIndex="1" />
                   <TextField fx:id="backupFileNameTF" prefHeight="26.0" prefWidth="141.0" promptText="Backup file name" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>

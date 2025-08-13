@@ -1,20 +1,23 @@
 package me.farnam.zeb;
 
+import net.lingala.zip4j.ZipFile;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Backup {
     private File backupDirectory;
     private File backupOutputDirectory;
     private String password;
     private boolean hasGit;
+    private String commitMessage;
 
     public Backup(File backupDirectory) throws IOException {
         String appDir = System.getProperty("user.dir");
@@ -52,11 +55,28 @@ public class Backup {
         this.password = password;
     }
 
+    public  void setCommitMessage(String message) { this.commitMessage = message; }
+
     public void setHasGit(boolean tf) {
         this.hasGit = tf;
     }
 
-    public void compress() {
+    public void compress() throws IOException, GitAPIException {
+        if (hasGit) {
+            commitChanges();
+        }
+
+        if (password != null && !password.isEmpty() && !password.isBlank()) {
+            try (ZipFile backup = new ZipFile(
+                    backupOutputDirectory + File.separator + "ZEB-Backup.zip",
+                    password.toCharArray())) {
+                backup.addFolder(backupDirectory);
+            }
+        } else {
+            try (ZipFile backup = new ZipFile(backupOutputDirectory + File.separator + "ZEB-Backup.zip")) {
+                backup.addFolder(backupDirectory);
+            }
+        }
 
     }
 
@@ -64,11 +84,10 @@ public class Backup {
      * If there is no git repository(hasGit is set to <code>false</code>), it will do nothing.
      * Use <code>setHasGit</code> to <code>true</code> if the directory has git repository.
      * Finds the git repository in the directory and commits with the given message.
-     * @param commitMessage
      * @throws IOException
      * @throws GitAPIException
      */
-    private void commitChanges(String commitMessage) throws IOException, GitAPIException {
+    private void commitChanges() throws IOException, GitAPIException {
         if (!hasGit) return;
 
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
@@ -79,6 +98,12 @@ public class Backup {
 
         Git git = new Git(gitRepo);
         CommitCommand commit = git.commit();
-        commit.setMessage(commitMessage).call();
+        if (commitMessage != null && !commitMessage.isEmpty() && !commitMessage.isBlank()){
+            commit.setMessage(commitMessage).call();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String now = LocalDateTime.now().format(formatter);
+            commit.setMessage(now);
+        }
     }
 }

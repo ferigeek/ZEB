@@ -3,6 +3,7 @@ module me.farnam {
     requires javafx.fxml;
     requires java.desktop;
     requires org.eclipse.jgit;
+    requires zip4j;
 
     opens me.farnam.zeb to javafx.fxml;
     exports me.farnam.zeb;

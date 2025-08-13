@@ -2,9 +2,14 @@ package me.farnam.zeb.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
+
+import java.io.File;
 
 public class BackupController {
     @FXML
@@ -17,6 +22,10 @@ public class BackupController {
     private GridPane googleDriveBackupGridPane;
     @FXML
     private TextField backupFileNameTF;
+    @FXML
+    private Button backupOutputChooseBtn;
+    @FXML
+    private TextField backupPathTF;
 
     @FXML
     private void onLocalRadioSelect(ActionEvent event) {
@@ -28,5 +37,22 @@ public class BackupController {
     private void onGoogleDriveRadioSelect(ActionEvent event) {
         localBackupGridPane.setVisible(false);
         googleDriveBackupGridPane.setVisible(true);
+    }
+
+    @FXML
+    private void onChooseBtn(ActionEvent event) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        chooser.setTitle("Choose backup directory ...");
+        File selectedPath = chooser.showDialog(backupOutputChooseBtn.getScene().getWindow());
+
+        if (selectedPath == null || !selectedPath.exists()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please choose a valid directory!");
+            alert.show();
+            return;
+        }
+
+        backupPathTF.setText(selectedPath.getAbsolutePath());
     }
 }
