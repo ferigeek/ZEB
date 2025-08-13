@@ -8,6 +8,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
+import me.farnam.zeb.backup.BackupMethod;
 
 import java.io.File;
 
@@ -54,5 +55,21 @@ public class BackupController {
         }
 
         backupPathTF.setText(selectedPath.getAbsolutePath());
+    }
+
+    public BackupMethod getBackupMethod() {
+        if (localBackupRadioBtn.isSelected()) {
+            return BackupMethod.Local;
+        } else {
+            return BackupMethod.GoogleDrive;
+        }
+    }
+
+    public File getLocalBackupPath() {
+        return new File(backupFileNameTF.getText());
+    }
+
+    public String getLocalBackupFileName() {
+        return backupFileNameTF.getText();
     }
 }

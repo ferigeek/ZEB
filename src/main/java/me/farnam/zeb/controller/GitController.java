@@ -37,4 +37,12 @@ public class GitController {
             customCommitMessageTA.setVisible(false);
         }
     }
+
+    public boolean getHasGit() {
+        return gitCheck.isSelected();
+    }
+
+    public String getCommitMessage() {
+        return customCommitMessageTA.getText();
+    }
 }

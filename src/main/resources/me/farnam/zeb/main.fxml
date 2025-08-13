@@ -16,7 +16,7 @@
             <Tab fx:id="backupTab" text="Backup" />
         </tabs>
       </TabPane>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Go" />
+      <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#onSubmitBtn" prefHeight="25.0" prefWidth="80.0" text="Submit" />
       <TextArea fx:id="logConsoleTextArea" prefHeight="200.0" prefWidth="600.0" style="-fx-text-fill: green; -fx-control-inner-background: black;">
          <VBox.margin>
             <Insets />

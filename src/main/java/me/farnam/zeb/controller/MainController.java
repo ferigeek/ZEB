@@ -1,5 +1,6 @@
 package me.farnam.zeb.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import me.farnam.zeb.App;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainController {
@@ -18,7 +20,7 @@ public class MainController {
     @FXML
     private Tab backupTab;
     @FXML
-    private Button goBtn;
+    private Button submitBtn;
     @FXML
     private TextArea logConsoleTextArea;
 
@@ -31,5 +33,10 @@ public class MainController {
 
     private Parent loadFXML(String fxml) throws IOException {
         return FXMLLoader.load(App.class.getResource(fxml));
+    }
+
+    @FXML
+    private void onSubmitBtn(ActionEvent event) {
+
     }
 }

@@ -1,4 +1,4 @@
-package me.farnam.zeb;
+package me.farnam.zeb.backup;
 
 import net.lingala.zip4j.ZipFile;
 import org.eclipse.jgit.api.CommitCommand;
@@ -18,6 +18,7 @@ public class Backup {
     private String password;
     private boolean hasGit;
     private String commitMessage;
+    private String backupFileName;
 
     public Backup(File backupDirectory) throws IOException {
         String appDir = System.getProperty("user.dir");
@@ -61,19 +62,25 @@ public class Backup {
         this.hasGit = tf;
     }
 
+    public void setBackupFileName(String fileName) { this.backupFileName = fileName; }
+
     public void compress() throws IOException, GitAPIException {
         if (hasGit) {
             commitChanges();
         }
 
-        if (password != null && !password.isEmpty() && !password.isBlank()) {
+        String fileName = "ZEB-Backup";
+        if (backupFileName != null && !backupFileName.isBlank()) fileName = backupFileName;
+
+        if (password != null && !password.isBlank()) {
             try (ZipFile backup = new ZipFile(
-                    backupOutputDirectory + File.separator + "ZEB-Backup.zip",
+                    backupOutputDirectory + File.separator + String.format("%s.zip", fileName),
                     password.toCharArray())) {
                 backup.addFolder(backupDirectory);
             }
         } else {
-            try (ZipFile backup = new ZipFile(backupOutputDirectory + File.separator + "ZEB-Backup.zip")) {
+            try (ZipFile backup = new ZipFile(
+                    backupOutputDirectory + File.separator + String.format("%s.zip", fileName))) {
                 backup.addFolder(backupDirectory);
             }
         }
@@ -98,7 +105,7 @@ public class Backup {
 
         Git git = new Git(gitRepo);
         CommitCommand commit = git.commit();
-        if (commitMessage != null && !commitMessage.isEmpty() && !commitMessage.isBlank()){
+        if (commitMessage != null && !commitMessage.isBlank()){
             commit.setMessage(commitMessage).call();
         } else {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

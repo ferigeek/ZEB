@@ -86,4 +86,12 @@ public class ChooseDirPassController {
         repeatPassLabel.setDisable(tf);
         repeatPassPF.setDisable(tf);
     }
+
+    public File getDirectory() {
+        return new File(dirPathTF.getText());
+    }
+
+    public String getPassword() {
+        return repeatPassPF.getText();
+    }
 }
