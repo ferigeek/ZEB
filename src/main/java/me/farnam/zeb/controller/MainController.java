@@ -9,7 +9,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import me.farnam.zeb.App;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MainController {

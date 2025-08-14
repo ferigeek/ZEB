@@ -65,9 +65,7 @@ public class BackupController {
         }
     }
 
-    public File getLocalBackupPath() {
-        return new File(backupFileNameTF.getText());
-    }
+    public File getLocalBackupPath() { return new File(backupFileNameTF.getText()); }
 
     public String getLocalBackupFileName() {
         return backupFileNameTF.getText();

@@ -13,14 +13,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Backup {
-    private File backupDirectory;
-    private File backupOutputDirectory;
+    private File srcDirectory;
+    private File outputDirectory;
     private String password;
-    private boolean hasGit;
+    private String outputFileName;
     private String commitMessage;
-    private String backupFileName;
+    private boolean hasGit;
 
-    public Backup(File backupDirectory) throws IOException {
+    public Backup(File srcDirectory) throws IOException {
+        if (srcDirectory.exists()) {
+            this.srcDirectory = srcDirectory;
+        } else {
+            throw new IllegalArgumentException("Backup source directory doesn't exist!");
+        }
         String appDir = System.getProperty("user.dir");
         File appCacheDir = new File(appDir + File.separator + ".zeb");
         if (!appCacheDir.exists()) {
@@ -29,88 +34,94 @@ public class Backup {
                 throw new IOException("Failed to create application cache directory!");
             }
         }
-        this.backupOutputDirectory = appCacheDir;
+        this.outputDirectory = appCacheDir;
     }
 
-    public Backup(File backupDirectory, File backupOutputDirectory) throws IOException {
-        this(backupDirectory);
-
-        if (backupDirectory.exists()) {
-            this.backupOutputDirectory = backupOutputDirectory;
+    public void setOutputDirectory(File outputDirectory) {
+        if (outputDirectory.exists()) {
+            this.outputDirectory = outputDirectory;
         } else {
             throw new IllegalArgumentException("Backup output directory doesn't exist!");
         }
     }
 
-    public Backup(File backupDirectory, String password) throws IOException{
-        this(backupDirectory);
-        this.password = password;
-    }
-
-    public Backup(File backupDirectory, File backupOutputDirectory, String password) throws IOException {
-        this(backupDirectory, backupOutputDirectory);
-        this.password = password;
-    }
-
     public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public  void setCommitMessage(String message) { this.commitMessage = message; }
-
-    public void setHasGit(boolean tf) {
-        this.hasGit = tf;
-    }
-
-    public void setBackupFileName(String fileName) { this.backupFileName = fileName; }
-
-    public void compress() throws IOException, GitAPIException {
-        if (hasGit) {
-            commitChanges();
-        }
-
-        String fileName = "ZEB-Backup";
-        if (backupFileName != null && !backupFileName.isBlank()) fileName = backupFileName;
-
         if (password != null && !password.isBlank()) {
-            try (ZipFile backup = new ZipFile(
-                    backupOutputDirectory + File.separator + String.format("%s.zip", fileName),
-                    password.toCharArray())) {
-                backup.addFolder(backupDirectory);
-            }
+            this.password = password;
         } else {
-            try (ZipFile backup = new ZipFile(
-                    backupOutputDirectory + File.separator + String.format("%s.zip", fileName))) {
-                backup.addFolder(backupDirectory);
-            }
+            throw new IllegalArgumentException("Enter a valid password!");
         }
+    }
 
+    public  void setCommitMessage(String message) {
+        if (message != null && !message.isBlank()) {
+            this.commitMessage = message;
+        } else {
+            throw new IllegalArgumentException("Enter a valid commit message!");
+        }
+    }
+
+    public void setHasGit(boolean hasGit) {
+        this.hasGit = hasGit;
     }
 
     /**
-     * If there is no git repository(hasGit is set to <code>false</code>), it will do nothing.
-     * Use <code>setHasGit</code> to <code>true</code> if the directory has git repository.
-     * Finds the git repository in the directory and commits with the given message.
-     * @throws IOException
-     * @throws GitAPIException
+     * File name for the backup output without file extension.
+     * @param fileName
      */
+    public void setOutputFileName(String fileName) {
+        if (fileName != null && !fileName.isBlank()) {
+            this.outputFileName = fileName;
+        } else {
+            throw new IllegalArgumentException("Enter a valid file name!");
+        }
+    }
+
+    public void backup() throws IOException, GitAPIException {
+        commitChanges();
+        compress();
+    }
+
+    private void compress() throws IOException, GitAPIException {
+        String fileName;
+        if (outputFileName != null) {
+            fileName = outputFileName;
+        } else {
+            fileName = "ZEB-Backup";
+        }
+
+        if (password != null) {
+            try (ZipFile backup = new ZipFile(
+                    outputDirectory + File.separator + String.format("%s.zip", fileName),
+                    password.toCharArray())) {
+                backup.addFolder(srcDirectory);
+            }
+        } else {
+            try (ZipFile backup = new ZipFile(
+                    outputDirectory + File.separator + String.format("%s.zip", fileName))) {
+                backup.addFolder(srcDirectory);
+            }
+        }
+
+    }
+
     private void commitChanges() throws IOException, GitAPIException {
         if (!hasGit) return;
 
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
-        Repository gitRepo = builder.setGitDir(backupDirectory)
+        try (Repository gitRepo = builder.setGitDir(srcDirectory)
                 .readEnvironment()
                 .findGitDir()
-                .build();
-
-        Git git = new Git(gitRepo);
-        CommitCommand commit = git.commit();
-        if (commitMessage != null && !commitMessage.isBlank()){
-            commit.setMessage(commitMessage).call();
-        } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String now = LocalDateTime.now().format(formatter);
-            commit.setMessage(now);
+                .build()) {
+            Git git = new Git(gitRepo);
+            CommitCommand commit = git.commit();
+            if (commitMessage != null){
+                commit.setMessage(commitMessage).call();
+            } else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String now = LocalDateTime.now().format(formatter);
+                commit.setMessage(now);
+            }
         }
     }
 }

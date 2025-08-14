@@ -28,13 +28,6 @@ public class ChooseDirPassController {
     @FXML
     private ImageView passwordCheckIcon;
 
-    /**
-     * If "Use password" checkbox is selected, related password fields are enabled.
-     * <br/>
-     * Otherwise, on deselecting the checkbox, related password fields are disabled.
-     * @param event
-     * ActionEvent
-     */
     @FXML
     private void onPassCheck(ActionEvent event) {
         if (passwordCheck.isSelected()) {
@@ -44,17 +37,11 @@ public class ChooseDirPassController {
         }
     }
 
-    /**
-     * Directory choosing dialog is shown to user after hitting "choose" button.
-     * The Chosen directory will be shown in the directory path text field.
-     * @param event
-     * ActionEvent
-     */
     @FXML
     private void onDirChooseBtn(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        directoryChooser.setTitle("Choose directory...");
+        directoryChooser.setTitle("Choose backup source directory...");
         File chosenPath = directoryChooser.showDialog(chooseBtn.getScene().getWindow());
 
         if (chosenPath == null || !chosenPath.exists()) {
@@ -91,7 +78,5 @@ public class ChooseDirPassController {
         return new File(dirPathTF.getText());
     }
 
-    public String getPassword() {
-        return repeatPassPF.getText();
-    }
+    public String getPassword() { return repeatPassPF.getText(); }
 }

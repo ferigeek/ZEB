@@ -5,6 +5,7 @@ import me.farnam.zeb.backup.BackupMethod;
 import me.farnam.zeb.controller.BackupController;
 import me.farnam.zeb.controller.ChooseDirPassController;
 import me.farnam.zeb.controller.GitController;
+import me.farnam.zeb.controller.MainController;
 
 import java.io.File;
 
@@ -50,6 +51,13 @@ public class Submit {
     }
 
     public void submit() {
+        //Loading information.
+        loadDirPass();
+        loadGit();
+        loadBackup();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("main.fxml"));
+        MainController mainController = fxmlLoader.getController();
 
     }
 }

@@ -38,11 +38,7 @@ public class GitController {
         }
     }
 
-    public boolean getHasGit() {
-        return gitCheck.isSelected();
-    }
+    public boolean getHasGit() { return gitCheck.isSelected(); }
 
-    public String getCommitMessage() {
-        return customCommitMessageTA.getText();
-    }
+    public String getCommitMessage() { return customCommitMessageTA.getText(); }
 }
