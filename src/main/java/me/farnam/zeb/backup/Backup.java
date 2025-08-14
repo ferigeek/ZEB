@@ -26,15 +26,6 @@ public class Backup {
         } else {
             throw new IllegalArgumentException("Backup source directory doesn't exist!");
         }
-        String appDir = System.getProperty("user.dir");
-        File appCacheDir = new File(appDir + File.separator + ".zeb");
-        if (!appCacheDir.exists()) {
-            boolean created = appCacheDir.mkdir();
-            if (!created) {
-                throw new IOException("Failed to create application cache directory!");
-            }
-        }
-        this.outputDirectory = appCacheDir;
     }
 
     public void setOutputDirectory(File outputDirectory) {
@@ -77,6 +68,19 @@ public class Backup {
         }
     }
 
+    /**
+     * Before calling this method, make sure you have correct values:
+     * <p>
+     *     If there is a git repository in source directory, set <code>hastGit</code> to true.
+     *     <br>
+     *     Setting commit message is optional.
+     * </p>
+     * <p>
+     *     You can set backup output directory and output file name.
+     * </p>
+     * @throws IOException
+     * @throws GitAPIException
+     */
     public void backup() throws IOException, GitAPIException {
         commitChanges();
         compress();
@@ -88,6 +92,18 @@ public class Backup {
             fileName = outputFileName;
         } else {
             fileName = "ZEB-Backup";
+        }
+
+        if (outputDirectory == null) {
+            String appDir = System.getProperty("user.dir");
+            File appCacheDir = new File(appDir + File.separator + ".zeb");
+            if (!appCacheDir.exists()) {
+                boolean created = appCacheDir.mkdir();
+                if (!created) {
+                    throw new IOException("Failed to create application cache directory!");
+                }
+            }
+            outputDirectory = appCacheDir;
         }
 
         if (password != null) {

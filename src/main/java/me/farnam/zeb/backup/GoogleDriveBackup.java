@@ -8,10 +8,6 @@ public class GoogleDriveBackup extends Backup {
         super(backupDirectory);
     }
 
-    public GoogleDriveBackup(File backupDirectory, File backupOutputDirectory) throws IOException {
-        super(backupDirectory, backupOutputDirectory);
-    }
-
     public void sync() {
 
     }
