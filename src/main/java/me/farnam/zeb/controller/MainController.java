@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import me.farnam.zeb.App;
+import me.farnam.zeb.Submit;
 
 import java.io.IOException;
 
@@ -18,8 +19,6 @@ public class MainController {
     private Tab gitTab;
     @FXML
     private Tab backupTab;
-    @FXML
-    private Button submitBtn;
     @FXML
     private TextArea logConsoleTextArea;
 
@@ -36,6 +35,7 @@ public class MainController {
 
     @FXML
     private void onSubmitBtn(ActionEvent event) {
-
+        Submit submit = new Submit();
+        submit.submit();
     }
 }

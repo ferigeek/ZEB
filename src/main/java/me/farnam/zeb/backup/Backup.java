@@ -13,16 +13,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Backup {
-    private File srcDirectory;
+    private final File srcDirectory;
     private File outputDirectory;
     private String password;
     private String outputFileName;
     private String commitMessage;
     private boolean hasGit;
 
-    public Backup(File srcDirectory) throws IOException {
-        if (srcDirectory.exists()) {
-            this.srcDirectory = srcDirectory;
+    public Backup(File sourceDirectory) throws IOException {
+        if (sourceDirectory.exists()) {
+            this.srcDirectory = sourceDirectory;
         } else {
             throw new IllegalArgumentException("Backup source directory doesn't exist!");
         }
@@ -86,7 +86,7 @@ public class Backup {
         compress();
     }
 
-    private void compress() throws IOException, GitAPIException {
+    private void compress() throws IOException {
         String fileName;
         if (outputFileName != null) {
             fileName = outputFileName;

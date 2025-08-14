@@ -11,6 +11,8 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 
 public class ChooseDirPassController {
+    private File sourceDirectory;
+
     @FXML
     private TextField dirPathTF;
     @FXML
@@ -51,6 +53,7 @@ public class ChooseDirPassController {
             return;
         }
 
+        this.sourceDirectory = chosenPath;
         dirPathTF.setText(chosenPath.getAbsolutePath());
     }
 
@@ -75,7 +78,7 @@ public class ChooseDirPassController {
     }
 
     public File getDirectory() {
-        return new File(dirPathTF.getText());
+        return this.sourceDirectory;
     }
 
     public String getPassword() { return repeatPassPF.getText(); }

@@ -13,6 +13,8 @@ import me.farnam.zeb.backup.BackupMethod;
 import java.io.File;
 
 public class BackupController {
+    private File backupOutputDirectory;
+
     @FXML
     private RadioButton localBackupRadioBtn;
     @FXML
@@ -54,6 +56,7 @@ public class BackupController {
             return;
         }
 
+        this.backupOutputDirectory = selectedPath;
         backupPathTF.setText(selectedPath.getAbsolutePath());
     }
 
@@ -65,7 +68,7 @@ public class BackupController {
         }
     }
 
-    public File getLocalBackupPath() { return new File(backupFileNameTF.getText()); }
+    public File getLocalBackupPath() { return this.backupOutputDirectory; }
 
     public String getLocalBackupFileName() {
         return backupFileNameTF.getText();

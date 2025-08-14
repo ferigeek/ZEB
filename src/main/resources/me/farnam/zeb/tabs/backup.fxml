@@ -53,7 +53,7 @@
             <Insets left="20.0" right="20.0" top="20.0" />
          </VBox.margin>
          <children>
-            <GridPane fx:id="localBackupGridPane">
+            <GridPane fx:id="localBackupGridPane" prefHeight="83.0" prefWidth="561.0">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="140.0" />
                   <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="311.0" />
@@ -65,7 +65,7 @@
                </rowConstraints>
                <children>
                   <Label text="Specify Backup Path:" textFill="WHITE" />
-                  <TextField fx:id="backupPathTF" prefHeight="26.0" prefWidth="295.0" promptText="Type backup path or hit the choose button ..." GridPane.columnIndex="1">
+                  <TextField fx:id="backupPathTF" editable="false" prefHeight="26.0" prefWidth="295.0" promptText="Choose a directory for backup file to go ..." GridPane.columnIndex="1">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
