@@ -55,16 +55,16 @@
          <children>
             <GridPane fx:id="localBackupGridPane" prefHeight="83.0" prefWidth="561.0">
                <columnConstraints>
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="140.0" />
-                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="311.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="110.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="187.0" />
+                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="306.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="68.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Specify Backup Path:" />
+                  <Label text="Specify Backup Path(Optional):" />
                   <TextField fx:id="backupPathTF" editable="false" prefHeight="26.0" prefWidth="295.0" promptText="Choose a directory for backup file to go ..." GridPane.columnIndex="1">
                      <opaqueInsets>
                         <Insets />
@@ -74,7 +74,7 @@
                      </GridPane.margin>
                   </TextField>
                   <Button fx:id="backupOutputChooseBtn" mnemonicParsing="false" onAction="#onChooseBtn" text="Choose" GridPane.columnIndex="2" />
-                  <Label text="Backup File Name:" GridPane.rowIndex="1" />
+                  <Label text="Backup File Name(Optional):" GridPane.rowIndex="1" />
                   <TextField fx:id="backupFileNameTF" prefHeight="26.0" prefWidth="141.0" promptText="Backup file name" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />

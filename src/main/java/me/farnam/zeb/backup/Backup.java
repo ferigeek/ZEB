@@ -69,8 +69,6 @@ public class Backup {
     public void setOutputFileName(String fileName) {
         if (fileName != null && !fileName.isBlank()) {
             this.outputFileName = fileName;
-        } else {
-            throw new IllegalArgumentException("Enter a valid file name!");
         }
     }
 

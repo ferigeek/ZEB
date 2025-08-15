@@ -61,6 +61,7 @@ public class Submit {
                 localBackup.backup();
                 Alert completeAlert = new Alert(Alert.AlertType.INFORMATION);
                 completeAlert.setContentText("Backup was generated successfully!");
+                completeAlert.show();
             } catch (IOException | GitAPIException ioException) {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setContentText(ioException.getMessage());
