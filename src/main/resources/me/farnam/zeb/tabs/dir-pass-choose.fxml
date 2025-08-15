@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.farnam.zeb.controller.ChooseDirPassController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.farnam.zeb.controller.ChooseDirPassController">
    <children>
-      <GridPane layoutX="38.0" layoutY="40.0" prefHeight="90.0" prefWidth="478.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <GridPane layoutX="38.0" layoutY="40.0" prefHeight="90.0" prefWidth="478.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="115.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="315.0" />
@@ -27,16 +27,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="📂 Choose Directory:" textFill="WHITE" />
+            <Label text="📂 Choose Directory:" />
             <TextField fx:id="dirPathTF" editable="false" promptText="Choose the source directory of your backup ..." GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </TextField>
             <Button fx:id="chooseBtn" mnemonicParsing="false" onAction="#onDirChooseBtn" text="Choose" GridPane.columnIndex="2" />
-            <CheckBox fx:id="passwordCheck" mnemonicParsing="false" onAction="#onPassCheck" text="Use password" textFill="WHITE" GridPane.rowIndex="1" />
-            <Label fx:id="setPassLabel" disable="true" text="🔑 Set Password:" textFill="WHITE" GridPane.rowIndex="2" />
-            <Label fx:id="repeatPassLabel" disable="true" text="🔑 Repeat Password:" textFill="WHITE" GridPane.rowIndex="3" />
+            <CheckBox fx:id="passwordCheck" mnemonicParsing="false" onAction="#onPassCheck" text="Use password" GridPane.rowIndex="1" />
+            <Label fx:id="setPassLabel" disable="true" text="🔑 Set Password:" GridPane.rowIndex="2" />
+            <Label fx:id="repeatPassLabel" disable="true" text="🔑 Repeat Password:" GridPane.rowIndex="3" />
             <PasswordField fx:id="setPassPF" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="20.0" right="20.0" />

@@ -1,4 +1,4 @@
-module me.farnam {
+module me.farnam.zeb {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;

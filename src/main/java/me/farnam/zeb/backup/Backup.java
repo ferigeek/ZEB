@@ -1,6 +1,8 @@
 package me.farnam.zeb.backup;
 
 import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -21,10 +23,14 @@ public class Backup {
     private boolean hasGit;
 
     public Backup(File sourceDirectory) throws IOException {
-        if (sourceDirectory.exists()) {
-            this.srcDirectory = sourceDirectory;
+        if (sourceDirectory != null) {
+            if (sourceDirectory.exists()) {
+                this.srcDirectory = sourceDirectory;
+            } else {
+                throw new IOException("Backup source directory doesn't exist!");
+            }
         } else {
-            throw new IllegalArgumentException("Backup source directory doesn't exist!");
+            throw new IllegalArgumentException("Provide valid backup source directory!");
         }
     }
 
@@ -107,10 +113,14 @@ public class Backup {
         }
 
         if (password != null) {
+            ZipParameters parameters = new ZipParameters();
+            parameters.setEncryptFiles(true);
+            parameters.setEncryptionMethod(EncryptionMethod.AES);
+
             try (ZipFile backup = new ZipFile(
                     outputDirectory + File.separator + String.format("%s.zip", fileName),
                     password.toCharArray())) {
-                backup.addFolder(srcDirectory);
+                backup.addFolder(srcDirectory, parameters);
             }
         } else {
             try (ZipFile backup = new ZipFile(

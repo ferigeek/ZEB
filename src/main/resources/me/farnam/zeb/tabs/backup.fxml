@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.farnam.zeb.controller.BackupController">
+<VBox prefHeight="150.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.farnam.zeb.controller.BackupController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -25,10 +25,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Backup Location:" textFill="WHITE" />
+            <Label text="Backup Location:" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <RadioButton fx:id="localBackupRadioBtn" mnemonicParsing="false" onAction="#onLocalRadioSelect" selected="true" text="Local" textFill="WHITE">
+                  <RadioButton fx:id="localBackupRadioBtn" mnemonicParsing="false" onAction="#onLocalRadioSelect" selected="true" text="Local">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -36,7 +36,7 @@
                         <ToggleGroup fx:id="backupLocationToggle" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="googleDriveBackupRadioBtn" mnemonicParsing="false" onAction="#onGoogleDriveRadioSelect" text="Google Drive" textFill="WHITE" toggleGroup="$backupLocationToggle">
+                  <RadioButton fx:id="googleDriveBackupRadioBtn" mnemonicParsing="false" onAction="#onGoogleDriveRadioSelect" text="Google Drive" toggleGroup="$backupLocationToggle">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -64,7 +64,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Specify Backup Path:" textFill="WHITE" />
+                  <Label text="Specify Backup Path:" />
                   <TextField fx:id="backupPathTF" editable="false" prefHeight="26.0" prefWidth="295.0" promptText="Choose a directory for backup file to go ..." GridPane.columnIndex="1">
                      <opaqueInsets>
                         <Insets />
@@ -74,7 +74,7 @@
                      </GridPane.margin>
                   </TextField>
                   <Button fx:id="backupOutputChooseBtn" mnemonicParsing="false" onAction="#onChooseBtn" text="Choose" GridPane.columnIndex="2" />
-                  <Label text="Backup File Name:" textFill="WHITE" GridPane.rowIndex="1" />
+                  <Label text="Backup File Name:" GridPane.rowIndex="1" />
                   <TextField fx:id="backupFileNameTF" prefHeight="26.0" prefWidth="141.0" promptText="Backup file name" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
@@ -92,7 +92,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Google account:" textFill="WHITE" />
+                  <Label text="Google account:" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
                         <Label text="Status:" textFill="#3100ff">

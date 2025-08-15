@@ -1,7 +1,5 @@
 package me.farnam.zeb;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import me.farnam.zeb.backup.Backup;
 import me.farnam.zeb.backup.BackupMethod;
@@ -14,6 +12,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class Submit {
+    private final ChooseDirPassController chooseDirPassController;
+    private final GitController gitController;
+    private final BackupController backupController;
+
     private File sourceDirectory;
     private File outputDirectory;
     private String password;
@@ -22,21 +24,18 @@ public class Submit {
     private BackupMethod backupMethod;
     private String backupFileName;
 
+    public Submit(ChooseDirPassController con1, GitController con2, BackupController con3) {
+        this.chooseDirPassController = con1;
+        this.gitController = con2;
+        this.backupController = con3;
+    }
 
     private void loadDirPass() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("tabs/dir-pass-choose.fxml"));
-        Parent root = fxmlLoader.load();
-        ChooseDirPassController cdpController = fxmlLoader.getController();
-
-        sourceDirectory = cdpController.getDirectory();
-        password = cdpController.getPassword();
+        sourceDirectory = chooseDirPassController.getDirectory();
+        password = chooseDirPassController.getPassword();
     }
 
     private void loadGit() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("tabs/git.fxml"));
-        Parent root = fxmlLoader.load();
-        GitController gitController = fxmlLoader.getController();
-
         hasGit = gitController.getHasGit();
         if (!hasGit) return;
 
@@ -45,10 +44,6 @@ public class Submit {
     }
 
     private void loadBackup() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("tabs/backup.fxml"));
-        Parent root = fxmlLoader.load();
-        BackupController backupController = fxmlLoader.getController();
-
         backupMethod = backupController.getBackupMethod();
 
         if (backupMethod.equals(BackupMethod.Local)) {
@@ -64,6 +59,8 @@ public class Submit {
             try {
                 Backup localBackup = getLocalBackup(sourceDirectory);
                 localBackup.backup();
+                Alert completeAlert = new Alert(Alert.AlertType.INFORMATION);
+                completeAlert.setContentText("Backup was generated successfully!");
             } catch (IOException | GitAPIException ioException) {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setContentText(ioException.getMessage());
