@@ -111,7 +111,7 @@ public class Submit {
         if (password != null && !password.isBlank()) { localBackup.setPassword(password); }
         if (outputDirectory != null) { localBackup.setOutputDirectory(outputDirectory); }
         localBackup.setHasGit(hasGit);
-        if (commitMessage != null) { localBackup.setCommitMessage(commitMessage); }
+        if (commitMessage != null && !commitMessage.isBlank()) { localBackup.setCommitMessage(commitMessage); }
         if (backupFileName != null) { localBackup.setOutputFileName(backupFileName); }
         mainController.consoleLog("Initialized local backup.");
         return localBackup;

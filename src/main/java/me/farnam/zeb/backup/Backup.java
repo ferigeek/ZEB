@@ -3,8 +3,10 @@ package me.farnam.zeb.backup;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
+import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -132,19 +134,20 @@ public class Backup {
     private void commitChanges() throws IOException, GitAPIException {
         if (!hasGit) return;
 
-        FileRepositoryBuilder builder = new FileRepositoryBuilder();
-        try (Repository gitRepo = builder.setGitDir(srcDirectory)
-                .readEnvironment()
-                .findGitDir()
-                .build()) {
-            Git git = new Git(gitRepo);
-            CommitCommand commit = git.commit();
-            if (commitMessage != null){
-                commit.setMessage(commitMessage).call();
-            } else {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String now = LocalDateTime.now().format(formatter);
-                commit.setMessage(now);
+        try (Git git = Git.open(srcDirectory);) {
+            AddCommand addCommand = git.add();
+            addCommand.addFilepattern(".").call();
+
+            Status status = git.status().call();
+            if (status.hasUncommittedChanges()) {
+                CommitCommand commit = git.commit();
+                if (commitMessage != null){
+                    commit.setMessage(commitMessage).call();
+                } else {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String now = LocalDateTime.now().format(formatter);
+                    commit.setMessage(now).call();
+                }
             }
         }
     }
