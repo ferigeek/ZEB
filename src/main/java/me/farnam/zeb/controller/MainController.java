@@ -12,6 +12,8 @@ import me.farnam.zeb.App;
 import me.farnam.zeb.Submit;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MainController {
     private Submit submit;
@@ -34,7 +36,7 @@ public class MainController {
      * to hold reference to other controllers and access their information later.
      */
     public void initialize() {
-        logConsoleTextArea.appendText("Welcome to ZEB \uD83D\uDD10!\nLog:\n");
+        logConsoleTextArea.appendText("Log:\n");
         accordion.setExpandedPane(chooseDirPassTP);
 
         try {
@@ -46,6 +48,7 @@ public class MainController {
             backupTP.setContent(backupLoader.load());
 
             submit = new Submit(
+                    this,
                     chooseDirPassLoader.getController(),
                     gitLoader.getController(),
                     backupLoader.getController()
@@ -64,5 +67,11 @@ public class MainController {
     @FXML
     private void onSubmitBtn(ActionEvent event) {
         submit.submit();
+    }
+
+    public void consoleLog(String message) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String now = LocalDateTime.now().format(formatter);
+        logConsoleTextArea.appendText(String.format("%s - %s%n", now, message));
     }
 }
